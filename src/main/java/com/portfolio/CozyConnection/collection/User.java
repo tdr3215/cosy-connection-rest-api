@@ -8,10 +8,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Data
+@Setter
+@Getter
 @Builder
 @Document(collection = "users") // collection name for mongodb
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@ToString
 public class User {
 @Id
     private String userId;
@@ -21,7 +23,8 @@ public class User {
     private String email;
     private String password;
 
-    private List<Game> favoriteGames;
-    private List<Friend> friends;
+//    private List<Game> favoriteGames;
+//    private List<Friend> friends;
+
 
 }
