@@ -3,10 +3,10 @@ package com.portfolio.CozyConnection.service;
 import com.portfolio.CozyConnection.collection.User;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface UserService {
-    User findUserByFirstName(String firstName);
 
     void save(User user);
 
@@ -14,9 +14,11 @@ public interface UserService {
 
     void removeUser(String id);
 
-    List<User> findUserByAge(Integer min, Integer max);
+    Optional<User> findUserById(String id);
 
-    User findUserById(String id);
+    Optional<User> findUserByFirstName(String firstName);
+
+    Optional<List<User>> findUserByAge(Integer min, Integer max);
 
     User updateUser(String id, User userData);
 }

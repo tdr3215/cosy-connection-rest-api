@@ -2,7 +2,6 @@ package com.portfolio.CozyConnection;
 
 
 import com.portfolio.CozyConnection.repository.UserRepository;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -12,10 +11,10 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class CozyConnectionApplication {
 
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
 
-
+// TODO: Work on Validation using the @Valid annotation and spring validation api
 
 //		User Bob = User.builder()
 //				.firstname("Bob")
@@ -43,16 +42,10 @@ public class CozyConnectionApplication {
 //				.age(15)
 //				.lastname("Joseph")
 //				.build();
-		SpringApplication.run(CozyConnectionApplication.class, args);
+        SpringApplication.run(CozyConnectionApplication.class, args);
 
 
-
-
-
-
-
-	}
-
+    }
 
 
 }

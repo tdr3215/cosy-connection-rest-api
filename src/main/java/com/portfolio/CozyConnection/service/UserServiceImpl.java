@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
-@Autowired
+    @Autowired
     private final UserRepository userRepository;
 
     public UserServiceImpl(UserRepository userRepository) {
@@ -19,60 +20,60 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-public User findUserByFirstName(String firstName){
-       return findAll().stream()
-                .filter(u->u.getFirstname().equals(firstName))
-                .findFirst()
-                .orElseThrow();
-}
+    public Optional<User> findUserByFirstName(String firstName) {
+        return findAll()
+                .stream()
+                .filter(user -> user.getFirstname().equals(firstName))
+                .findFirst();
+    }
 
     @Override
     public void save(User user) {
-         userRepository.save(user);
+        userRepository.save(user);
         System.out.println("New User Added!");
     }
 
 
     @Override
     public List<User> findAll() {
+        return userRepository.findAll();
 
-        return userRepository.findAll().stream().toList();
     }
 
     @Override
     public void removeUser(String id) {
-       User userToBeDeleted = userRepository.findById(id).orElseThrow();
+        User userToBeDeleted = userRepository.findById(id).orElseThrow();
 
-       userRepository.delete(userToBeDeleted);
+        userRepository.delete(userToBeDeleted);
     }
 
     @Override
-    public List<User> findUserByAge(Integer min, Integer max) {
-        try {
-            return userRepository.findUserByAgeBetween(min, max);
-        } catch (Exception e){
-           System.out.println(e.getMessage());
-        }
-
-        return null;
-
-
+    public Optional<List<User>> findUserByAge(Integer min, Integer max) {
+        return userRepository.findUserByAgeBetween(min, max);
     }
 
     @Override
-    public User findUserById(String id) {
-        return userRepository.findById(id).orElseThrow();
+    public Optional<User> findUserById(String id) {
+        return userRepository.findById(id);
+
+
     }
 
     @Override
     public User updateUser(String id, User userData) {
-        User userToBeUpdated = findUserById(id);
-        userToBeUpdated.setFirstname(userData.getFirstname());
-        userToBeUpdated.setLastname(userData.getLastname());
-        userToBeUpdated.setAge(userData.getAge());
-        userToBeUpdated.setEmail(userData.getEmail());
-        userRepository.save(userToBeUpdated);
-        return userToBeUpdated;
+        Optional<User> userToBeUpdated = findUserById(id);
+        User updatedUser = userToBeUpdated.map(u -> {
+
+            u.setFirstname(userData.getFirstname());
+            u.setLastname(userData.getLastname());
+            u.setAge(userData.getAge());
+            u.setEmail(userData.getEmail());
+            return u;
+        }).orElseThrow();
+
+
+        userRepository.save(updatedUser);
+        return updatedUser;
     }
 
 
