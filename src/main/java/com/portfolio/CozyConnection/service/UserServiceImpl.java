@@ -27,9 +27,9 @@ public User findUserByFirstName(String firstName){
 }
 
     @Override
-    public String save(User user) {
+    public void save(User user) {
          userRepository.save(user);
-        return user.getUserId();
+        System.out.println("New User Added!");
     }
 
 
@@ -38,4 +38,35 @@ public User findUserByFirstName(String firstName){
 
         return userRepository.findAll().stream().toList();
     }
+
+    @Override
+    public void removeUser(String id) {
+       User userToBeDeleted = userRepository.findById(id).orElseThrow();
+
+       userRepository.delete(userToBeDeleted);
+    }
+
+    @Override
+    public List<User> findUserByAge(Integer min, Integer max) {
+       return userRepository.findUserByAgeBetween(min, max);
+
+    }
+
+    @Override
+    public User findUserById(String id) {
+        return userRepository.findById(id).orElseThrow();
+    }
+
+    @Override
+    public User updateUser(String id, User userData) {
+        User userToBeUpdated = findUserById(id);
+        userToBeUpdated.setFirstname(userData.getFirstname());
+        userToBeUpdated.setLastname(userData.getLastname());
+        userToBeUpdated.setAge(userData.getAge());
+        userToBeUpdated.setEmail(userData.getEmail());
+        userRepository.save(userToBeUpdated);
+        return userToBeUpdated;
+    }
+
+
 }

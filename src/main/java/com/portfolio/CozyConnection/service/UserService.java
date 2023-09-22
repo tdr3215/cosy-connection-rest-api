@@ -1,7 +1,6 @@
 package com.portfolio.CozyConnection.service;
 
 import com.portfolio.CozyConnection.collection.User;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -9,8 +8,15 @@ import java.util.List;
 public interface UserService {
     User findUserByFirstName(String firstName);
 
-    String save(User user);
-//    void saveAll(User... users);
+    void save(User user);
 
     List<User> findAll();
+
+    void removeUser(String id);
+
+    List<User> findUserByAge(Integer min, Integer max);
+
+    User findUserById(String id);
+
+    User updateUser(String id, User userData);
 }
