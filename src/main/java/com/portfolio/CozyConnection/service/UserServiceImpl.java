@@ -48,7 +48,14 @@ public User findUserByFirstName(String firstName){
 
     @Override
     public List<User> findUserByAge(Integer min, Integer max) {
-       return userRepository.findUserByAgeBetween(min, max);
+        try {
+            return userRepository.findUserByAgeBetween(min, max);
+        } catch (Exception e){
+           System.out.println(e.getMessage());
+        }
+
+        return null;
+
 
     }
 
